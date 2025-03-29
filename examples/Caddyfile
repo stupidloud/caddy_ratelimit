@@ -1,0 +1,33 @@
+{
+    debug
+    log {
+        level DEBUG
+        format console
+        output stdout
+    }
+}
+
+:8081 {
+    log {
+        level DEBUG
+        format console
+        output stdout
+    }
+
+    # 注册动态限速中间件
+    #rate_limit_dynamic {
+    #    header_user_id X-Accel-User-ID
+    #    header_rate_limit X-Accel-RateLimit
+    #}
+
+    # 注册拦截器中间件
+    #rate_limit_interceptor
+
+    # 反向代理到后端服务器
+    reverse_proxy /download/* localhost:8080
+
+    # 处理内部重定向的文件服务
+    file_server {
+        root /srv/protected_files
+    }
+}
